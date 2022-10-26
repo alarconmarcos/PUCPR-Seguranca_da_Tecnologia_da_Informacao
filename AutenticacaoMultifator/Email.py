@@ -8,9 +8,9 @@ username = "omega.marcos@gmail.com"
 password = "wmfyltpowarwepto"
 
 
-def enviar_email(code):
+def enviar_email(code, email):
     mail_from = "omega.marcos@gmail.com"
-    mail_to = "marcos@omegasistemas.com.br"
+    mail_to = email
     mail_subject = "Código E-mail"
     mail_body = "Código de validação: %d " % code
 
@@ -24,7 +24,7 @@ def enviar_email(code):
     connection.starttls()
     connection.login(username, password)
     connection.send_message(msg)
-    connection.quit()
+    connection.quit() # Fecha a conexão
 
 
 

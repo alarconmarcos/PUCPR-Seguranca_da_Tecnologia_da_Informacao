@@ -33,4 +33,4 @@ while True:
         Autentica.autenticar()
 
     elif opcao == "4":
-        break
+        break # Sai do programa

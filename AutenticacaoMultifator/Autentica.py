@@ -1,6 +1,7 @@
 import pyrebase
 import random
 import Email
+import acesso
 
 firebaseConfig = {
     "apiKey": "AIzaSyAhpYlI3dA7PQ5GKxv5FaQv0FaZs3hAS80",
@@ -19,9 +20,14 @@ def cadastrar():
 
     user = input("Digite seu e-mail: ")
     password = input("Digite sua senha, com pelo menos 6 caracteres: ")
-    status = auth.create_user_with_email_and_password(user,password)
-    if status['idToken']:
-        print("Usuário:", user+" cadastrado com sucesso!\n")
+    if len(password) >= 6:
+        status = auth.create_user_with_email_and_password(user,password)
+        if status['idToken']:
+            print("\nUsuário:", user+" cadastrado com sucesso!")
+        else:
+            print("\nErro ao cadastrar usuário!")
+    else:
+        print("\nSenha deve ter pelo menos 6 caracteres!")
 
 
 def autenticar():
@@ -37,19 +43,20 @@ def autenticar():
     verifyEmail = users[0]["emailVerified"]
 
     if verifyEmail:
-        print("Autenticação em dois fatores\n")
+        print("\nAutenticação em dois fatores")
         codigo = random.randint(100, 1000)
 
-        Email.enviar_email(codigo)
+        Email.enviar_email(codigo, user)
 
-        codigoEmail = int(input("Entre com o código que foi enviado paro o seu e-mail: "))
+        codigoEmail = int(input("\nInforme o código enviado para o seu e-mail: "))
 
         if codigo == codigoEmail:
-            print("Usuário Autenticado com Sucesso!!!\n")
+            print("\nUsuário Autenticado com Sucesso!!!")
+            acesso.executarcontroleacesso(user)
         else:
-            print("Código Inválido!!\n")
+            print("\nCódigo Inválido!!\n")
     else:
-        print("E-mail não verificado!\n")
+        print("\nE-mail não verificado!\n")
 
 def verificar_email():
     firebase = pyrebase.initialize_app(firebaseConfig)
@@ -60,4 +67,4 @@ def verificar_email():
     status = auth.sign_in_with_email_and_password(user, password)
     idToken = status["idToken"]
     auth.send_email_verification(idToken)
-    print("Email de verificação enviado para: ", user+"\n")
+    print("\nEmail de verificação enviado para: ", user) 
