@@ -18,7 +18,7 @@ Título: Desafio Autenticação e Controle de Acesso no banco de Tóquio'''
 import Autentica
 
 while True:
-    print("1 - Cadastrar Usuário")
+    print("\n1 - Cadastrar Usuário")
     print("2 - Verificar Email")
     print("3 - Autenticar Usuário")
     print("4 - Sair\n")
@@ -39,4 +39,4 @@ while True:
 
     # sair do programa
     elif opcao == "4":
-        break # Sai do programa
+        break
